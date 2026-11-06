@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tozzetto Fortuna</title>
+<meta name="description" content="Spezza o tozzetto e leggi o responso de o giorno. Radio Nocchia, Tuscia Games.">
+<meta property="og:title" content="O Tozzetto de a Fortuna">
+<meta property="og:description" content="Spezzalo. Dentro c'è scritto o giorno tuo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#172020;--giallo:#f2c74e;--carta:#fcfaf2;--nero:#14181a;--grigio:#787d78;--bg:#ffffff;--testo:#14181a}
+:root:not([data-theme="light"]){@media (prefers-color-scheme: dark){--bg:#0f1413;--testo:#f3efe4;--carta:#fcfaf2}}
+:root[data-theme="dark"]{--bg:#0f1413;--testo:#f3efe4}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--testo);font-family:Inter,system-ui,sans-serif;min-height:100%}
+header{background:var(--verde);color:#fff;padding:22px 16px 26px}
+header .k{color:var(--giallo);font-weight:700;font-size:13px;letter-spacing:.08em}
+header h1{font-family:Poppins,sans-serif;font-weight:800;font-size:clamp(30px,8vw,54px);line-height:1;margin:6px 0 0}
+header h1 span{color:var(--giallo);display:block}
+main{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+.sotto{font-style:italic;color:var(--grigio);margin:6px 0 18px}
+.data{font-size:14px;color:var(--grigio);text-align:right;margin-top:-30px}
+.scena{position:relative;height:300px;perspective:900px;user-select:none;-webkit-tap-highlight-color:transparent}
+.toz{position:absolute;left:50%;top:40px;width:min(340px,86%);height:120px;transform:translateX(-50%);cursor:pointer;filter:drop-shadow(0 10px 0 #aa783c)}
+.meta{position:absolute;top:0;height:100%;width:50%;background:#deb268;overflow:hidden;transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .7s}
+.meta.sx{left:0;clip-path:polygon(12% 0,100% 0,100% 100%,0 100%);border-top:6px solid #f0cd8c}
+.meta.dx{right:0;clip-path:polygon(0 0,100% 0,88% 100%,0 100%);border-top:6px solid #f0cd8c}
+.meta i{position:absolute;border-radius:50%;background:#78481e;box-shadow:inset 3px -3px 0 #a06e3c}
+.toz.rotto .sx{transform:translateX(-40%) rotate(-12deg)}
+.toz.rotto .dx{transform:translateX(40%) rotate(12deg)}
+.toz:not(.rotto){animation:trema 2.2s ease-in-out infinite}
+@keyframes trema{0%,86%,100%{transform:translateX(-50%) rotate(0)}90%{transform:translateX(-50%) rotate(-3deg)}94%{transform:translateX(-50%) rotate(3deg)}}
+.tocca{position:absolute;left:0;right:0;top:184px;text-align:center;font-weight:700;color:var(--grigio);font-size:15px;transition:opacity .3s}
+.scena.aperta .tocca{opacity:0}
+.striscia{position:absolute;left:50%;top:92px;width:min(420px,96%);transform:translate(-50%,0) scaleY(0);transform-origin:top;background:var(--carta);color:#14181a;border:2px solid #c8c3b4;box-shadow:8px 8px 0 #cdcdc8;padding:18px 20px;font-size:clamp(18px,4.8vw,24px);font-weight:500;text-align:center;line-height:1.3;transition:transform .6s .45s cubic-bezier(.2,.8,.2,1),opacity .4s .45s;opacity:0}
+.scena.aperta .striscia{transform:translate(-50%,0) scaleY(1);opacity:1}
+.extra{opacity:0;transform:translateY(10px);transition:opacity .5s 1s,transform .5s 1s;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.aperta+.extra{opacity:1;transform:none}
+.extra .k{font-size:12px;font-weight:700;color:var(--grigio);letter-spacing:.06em}
+.extra .v{font-family:Poppins,sans-serif;font-weight:800;font-size:clamp(26px,7vw,40px);line-height:1.1;margin-top:4px}
+.extra .s{font-size:13px;color:var(--grigio);margin-top:4px}
+.azioni{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;opacity:0;transition:opacity .5s 1.3s}
+.aperta~.azioni{opacity:1}
+button,a.b{appearance:none;border:0;border-radius:12px;padding:14px 18px;font:700 16px Poppins,sans-serif;cursor:pointer;text-decoration:none;display:inline-block;color:var(--nero);background:var(--giallo)}
+button.sec,a.b.sec{background:transparent;border:2px solid var(--giallo);color:var(--testo)}
+.cta{margin-top:28px;background:var(--giallo);color:#14181a;border-radius:16px;padding:18px;text-align:center}
+.cta b{font-family:Poppins,sans-serif;display:block;font-size:18px}
+.cta a{color:#14181a;font-weight:800;font-family:Poppins,sans-serif}
+footer{color:var(--grigio);font-size:12px;text-align:center;padding:16px}
+</style>
+</head>
+<body>
+<header><div class="k">RADIO NOCCHIA</div><h1>O TOZZETTO <span>DE A FORTUNA</span></h1></header>
+<main>
+ <div class="data" id="data"></div>
+ <p class="sotto">Spezzalo. Dentro c'è scritto o giorno tuo.</p>
+ <div class="scena" id="scena">
+  <div class="toz" id="toz" role="button" aria-label="Spezza o tozzetto" tabindex="0"><div class="meta sx"></div><div class="meta dx"></div></div>
+  <div class="tocca">👆 tocca o tozzetto pe' spezzallo</div>
+  <div class="striscia" id="striscia"></div>
+ </div>
+ <div class="extra">
+  <div><div class="k">NUMERI FORTUNATI</div><div class="v" id="numeri"></div><div class="s">ruota de Viterbo (che nun esiste)</div></div>
+  <div><div class="k">PAROLA FORTUNATA</div><div class="v" id="parola"></div><div class="s" id="sig"></div></div>
+ </div>
+ <div class="azioni">
+  <button id="condividi">Condividi o responso</button>
+  <button class="sec" id="antro">Spezzane 'n antro</button>
+ </div>
+ <div class="cta"><b>A fortuna vera: o paese tuo in cima a a classifica.</b>Gioca pe' o comune tuo, gratis dal telefono → <a href="https://grandtuscia.netlify.app/?utm_source=tozzetto">grandtuscia.netlify.app</a></div>
+</main>
+<footer>Radio Nocchia · Tuscia Games · 'n tozzetto a o giorno, uguale pe' tutti. Doppo o primo, è fortuna tua.</footer>
+<script>
+const FORTUNE=["Oggi trovi 'na cosa che cercavi. Nun è o porcino. So' e chiavi.", "'N vicino te chiederà 'n favore. Diglie de sì: o confine se decide doppo.", "A fortuna te sorride. Da lontano. Come a commare.", "Stasera qualcuno te pensa. È a classifica: o paese tuo sta sotto.", "Riceverai 'na notizia. L'ha già data a commare.", "O trattore parte a o primo colpo. Ma solo oggi.", "Farai 'n viaggio lungo. Fino a o bar. E ritorno.", "Chi aspetta, raccoie. Chi raccoie, nun aspetta nessuno.", "Oggi nun t'accappotti. Domani nun se sa.", "A persona giusta sta più vicina de quanto pensi. Tipo a via Roma.", "I numeri te portano fortuna. Soprattutto quelli de a classifica.", "Una porta se chiude, 'n cancello se apre. È quello de o vicino: richiudilo.", "Avrai 'na sorpresa in cucina. Nun è 'n regalo: è a cucòzza de settembre.", "O vento gira a favore tuo. Si stai in barca. Si stai in deltaplano, controlla.", "'N amico te dirà a verità. Doppo o secondo bicchiere.", "Oggi sei o più furbo de o paese. O paese nun lo sa, e mejo così.", "Riceverai 'n messaggio da chi nun te scrive mai. È o gruppo de o paese: «chi gioca stasera?»", "A pazienza è 'na virtù. A semovente no.", "Vincerai 'na discussione. Co' o cane.", "A fortuna aiuta gli audaci. E i cauti arrivano a casa co' e nocchie intere.", "Troverai o porcino più grosso de a vita tua. Nun fà a foto: nessuno te crede uguale.", "Oggi dici macchè a tutto. E va bene così.", "Quello che semini a settembre lo raccoi a settembre. Pe' a classifica basta stasera.", "Nun giudicà o cignale da a strada che attraversa.", "Avrai fortuna in amore. 'N po' meno in curva.", "A sfida de oggi è co' te stesso. Quella de domani co' Caprarola.", "Ogni nocchia che casca è 'n sì. Raccoile tutte.", "'N sconosciuto te offrirà 'n caffè. Accetta: è o barista, e lo segna.", "Guarda a luna stasera. Poi guarda a classifica. Una de e due è cambiata.", "O silenzio vale oro. A o bar vale 'n caffè.", "Oggi nun perdi gnente. Manco e chiavi. Manco a pazienza.", "C'è chi parla e chi raccoie. Tu oggi raccoi, e domani parli.", "Nun fidatte de chi dice «i porcini stanno…» e poi se zitta.", "Avrai 'n'idea geniale sotto a doccia. Dimenticala prima de asciugatte, come tutti.", "O paese tuo c'ha bisogno de te. Nun pe' a sagra: pe' a classifica.", "Chi dice edè ha già deciso. Chi dice dunca ha già rinunciato. Tu dì sì.", "Oggi o cammello de Carbognano te porta fortuna. Nun chiede perché.", "Riceverai 'n complimento strano: «sei bella come 'na castagna». È 'n complimento.", "A tua Ape sogna de esse 'na Vespa. Lasciala sognà, ma guida piano.", "Qualcuno te passerà in classifica stanotte. Si giochi, sei tu quel qualcuno.", "Nun contà e nocchie prima de scaricà o cassone.", "Trovi 'na moneta pe' tera. È de o 1987, come a buca.", "Oggi te tocca 'na cosa bona e 'na cosa storta. A cosa storta è l'Ape.", "A classifica è come a nebbia de a Valle: se dirada a chi se alza presto.", "'N anziano te darà 'n consiglio. Ascoltalo. Poi fai come te pare, come fa lui.", "Mangerai bene stasera. Nun è 'na previsione: è a Tuscia.", "Oggi vinci qualcosa. Nun a lotteria: a sfida co' tu' cugino.", "A tramontana porta sereno e porta via i cappelli. Tienilo.", "Si cerchi 'n segno, è questo: gioca pe' o paese tuo.", "Chi ride ultimo ha capito a battuta tardi. Ma ride.", "Nun avrai fretta oggi. Sei de a Tuscia: nun ce l'hai mai.", "A fortuna de oggi: tutte e dita doppo i ziriliò.", "Farai pace co' o vicino. Fino a a prossima potatura.", "Oggi o lago è calmo. Approfittane: a regata se vince co' a testa.", "A frase de o giorno a leggi tu. O punto a o paese lo porti tu.", "Regalerai 'n sorriso. E 'n sacco de nocchie, che vale de più.", "L'anno nòvo comincia quanno lo decidi tu. Pe' a classifica, a mezzanotte."];const PAROLE=[["gnibbè", "tutto quanto"], ["macchè", "certo!"], ["edè", "è"], ["dunca", "dunque, rassegnato"], ["trénfio", "pieno fino all'orlo"], ["schiessasse", "nun vedé l'ora"], ["léngua", "pettegola"], ["nì", "ragazzo"], ["catàna", "sacca de o contadino"], ["vussa", "rumore fastidioso"], ["gràscia", "benessere"], ["ziriliò", "fochi fatti a mano"], ["ròcchio", "scorciatoia (e salsiccia)"], ["chìcara", "testa pelata"], ["billo", "tacchino"], ["stratasse", "sdraiasse godendosela"], ["tricà", "fa' tardi"], ["zinnatèlla", "sorso"], ["pèquara", "pecora"], ["vaco", "acino, nocchia"]];
+const MESI=['gennaro','febbraro','marzo','aprile','maggio','giugno','lujo','agosto','settembre','ottobre','novembre','dicembre'];
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const oggi=new Date();const giorno=Math.floor((oggi-new Date(oggi.getFullYear(),0,0))/864e5)+oggi.getFullYear()*366;
+let seme=giorno, extra=0;
+document.getElementById('data').textContent=oggi.getDate()+' '+MESI[oggi.getMonth()];
+const toz=document.getElementById('toz');
+// nocchie sul biscotto
+const r0=mulberry(7);[...document.querySelectorAll('.meta')].forEach(m=>{for(let i=0;i<14;i++){const e=document.createElement('i');const s=8+r0()*9;e.style.cssText=`width:${s}px;height:${s}px;left:${6+r0()*82}%;top:${10+r0()*74}%`;m.appendChild(e)}});
+let dati=null;
+function calcola(s){const r=mulberry(s);const f=FORTUNE[Math.floor(r()*FORTUNE.length)];const n=new Set();while(n.size<3)n.add(1+Math.floor(r()*90));const p=PAROLE[Math.floor(r()*PAROLE.length)];return{f,n:[...n].sort((a,b)=>a-b),p}}
+function mostra(){dati=calcola(seme+extra*1013);document.getElementById('striscia').textContent=dati.f;document.getElementById('numeri').textContent=dati.n.join(' · ');document.getElementById('parola').textContent=dati.p[0];document.getElementById('sig').textContent=dati.p[1];}
+function spezza(){if(toz.classList.contains('rotto'))return;mostra();toz.classList.add('rotto');document.getElementById('scena').classList.add('aperta');try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}}
+toz.addEventListener('click',spezza);toz.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();spezza()}});
+document.getElementById('antro').addEventListener('click',()=>{extra++;toz.classList.remove('rotto');document.getElementById('scena').classList.remove('aperta');setTimeout(spezza,700)});
+document.getElementById('condividi').addEventListener('click',async()=>{if(!dati)return;const testo=`O Tozzetto de a Fortuna, ${oggi.getDate()} ${MESI[oggi.getMonth()]}:\n«${dati.f}»\nNumeri: ${dati.n.join(' · ')} · Parola: ${dati.p[0]}\nSpezza o tuo: ${location.href.split('?')[0]}`;try{if(navigator.share){await navigator.share({title:'O Tozzetto de a Fortuna',text:testo});return}}catch(e){}try{await navigator.clipboard.writeText(testo);alert('Copiato! Incollalo su WhatsApp o Facebook.')}catch(e){prompt('Copia o responso:',testo)}});
+</script>
+</body>
+</html>
