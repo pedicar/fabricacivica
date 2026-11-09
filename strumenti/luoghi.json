@@ -1,0 +1,247 @@
+[
+ {
+  "id": "riserva",
+  "cat": "natura",
+  "name": "Riserva Naturale Lago di Vico",
+  "short": "Area protetta dal 1982: boschi, canneti e uccelli acquatici.",
+  "maps": "Riserva Naturale Lago di Vico"
+ },
+ {
+  "id": "pantanacce",
+  "cat": "luoghi",
+  "name": "Le Pantanacce",
+  "short": "La piana a nord del lago, oggi coperta di noccioleti.",
+  "maps": "Pantanacce Lago di Vico"
+ },
+ {
+  "id": "radio",
+  "cat": "tradizioni",
+  "name": "Casale di Radio Nocchia",
+  "short": "Il casale da dove trasmette Radio Nocchia, la radio della Tuscia.",
+  "maps": null
+ },
+ {
+  "id": "venere",
+  "cat": "luoghi",
+  "name": "Monte Venere",
+  "short": "Il cono vulcanico nato dentro la caldera: 838 metri.",
+  "maps": "Monte Venere Caprarola"
+ },
+ {
+  "id": "fogliano",
+  "cat": "luoghi",
+  "name": "Monte Fogliano",
+  "short": "La cima più alta dell'anello del lago: 965 metri.",
+  "maps": "Monte Fogliano"
+ },
+ {
+  "id": "faggeta-venere",
+  "cat": "natura",
+  "name": "Faggeta depressa",
+  "short": "Faggi a meno di 900 metri: rari così in basso.",
+  "maps": "Faggeta Monte Venere"
+ },
+ {
+  "id": "deltaplano",
+  "cat": "attivita",
+  "name": "Volo libero sulla caldera",
+  "short": "Dal bordo della caldera si decolla in deltaplano e parapendio.",
+  "maps": "decollo deltaplano Lago di Vico"
+ },
+ {
+  "id": "vela",
+  "cat": "attivita",
+  "name": "Vela sul lago",
+  "short": "Il vento della caldera è perfetto per le derive.",
+  "maps": "vela Lago di Vico"
+ },
+ {
+  "id": "pesca",
+  "cat": "attivita",
+  "name": "Pesca nel lago",
+  "short": "Luccio, persico reale, coregone: il lago è pescoso.",
+  "maps": "pesca Lago di Vico"
+ },
+ {
+  "id": "svasso",
+  "cat": "natura",
+  "name": "Svasso maggiore",
+  "short": "L'uccello tuffatore col ciuffo, nidifica tra i canneti.",
+  "maps": null
+ },
+ {
+  "id": "airone",
+  "cat": "natura",
+  "name": "Airone cenerino",
+  "short": "Grande, grigio e paziente: caccia fermo nell'acqua bassa.",
+  "maps": null
+ },
+ {
+  "id": "cinghiale",
+  "cat": "natura",
+  "name": "Cinghiale",
+  "short": "Il padrone dei boschi di castagno e di faggio.",
+  "maps": null
+ },
+ {
+  "id": "caprarola",
+  "cat": "luoghi",
+  "name": "Caprarola",
+  "short": "Il paese tagliato in due dalla via dritta che sale al palazzo.",
+  "maps": "Caprarola"
+ },
+ {
+  "id": "palazzo",
+  "cat": "storia",
+  "name": "Palazzo Farnese",
+  "short": "Pianta a pentagono e cortile rotondo: opera del Vignola.",
+  "maps": "Palazzo Farnese Caprarola"
+ },
+ {
+  "id": "carbognano",
+  "cat": "luoghi",
+  "name": "Carbognano",
+  "short": "Borgo delle nocciole, con il castello dei Farnese.",
+  "maps": "Carbognano"
+ },
+ {
+  "id": "nocciola",
+  "cat": "tradizioni",
+  "name": "Nocciola Romana DOP",
+  "short": "La nocciola dei Cimini: la raccolta va da fine agosto all'autunno.",
+  "maps": "Nocciola Romana DOP Carbognano"
+ },
+ {
+  "id": "fabrica",
+  "cat": "luoghi",
+  "name": "Fabrica di Roma",
+  "short": "Il paese del castello Farnese e della corsa dei carrettini.",
+  "maps": "Fabrica di Roma"
+ },
+ {
+  "id": "carrettini",
+  "cat": "tradizioni",
+  "name": "La corsa dei carrettini",
+  "short": "Carrettini fatti a mano, ruote a cuscinetti, solo gravità.",
+  "maps": "Via Roma Fabrica di Roma"
+ },
+ {
+  "id": "forre",
+  "cat": "natura",
+  "name": "Le forre di tufo",
+  "short": "Valli strette e profonde scavate dai torrenti nel tufo.",
+  "maps": "forre Agro Falisco"
+ },
+ {
+  "id": "falerii",
+  "cat": "storia",
+  "name": "Falerii Novi",
+  "short": "Città romana fondata nel 241 a.C., con le mura quasi intatte.",
+  "maps": "Falerii Novi"
+ },
+ {
+  "id": "porta-giove",
+  "cat": "storia",
+  "name": "Porta di Giove",
+  "short": "L'ingresso a ovest delle mura, con la testa del dio sulla chiave dell'arco.",
+  "maps": "Porta di Giove Falerii Novi"
+ },
+ {
+  "id": "santa-maria",
+  "cat": "storia",
+  "name": "Santa Maria di Falleri",
+  "short": "Abbazia cistercense del XII secolo, dentro le mura romane.",
+  "maps": "Abbazia di Santa Maria di Falleri"
+ },
+ {
+  "id": "soratte",
+  "cat": "luoghi",
+  "name": "Monte Soratte",
+  "short": "La montagna isolata sulla valle del Tevere: 691 metri. Da Falerii si vede all'orizzonte.",
+  "maps": "Monte Soratte"
+ },
+ {
+  "id": "cimino",
+  "cat": "luoghi",
+  "name": "Monte Cimino",
+  "short": "La montagna più alta della zona: 1053 metri.",
+  "maps": "Monte Cimino"
+ },
+ {
+  "id": "faggeta-unesco",
+  "cat": "natura",
+  "name": "Faggeta del Monte Cimino",
+  "short": "Patrimonio UNESCO dal 2017: faggi altissimi e antichi.",
+  "maps": "Faggeta Monte Cimino"
+ },
+ {
+  "id": "sasso",
+  "cat": "natura",
+  "name": "Sasso Menicante",
+  "short": "Un masso enorme che oscilla se lo spingi nel punto giusto.",
+  "maps": "Sasso Menicante"
+ },
+ {
+  "id": "cigni",
+  "cat": "tradizioni",
+  "name": "Le serate ai Cigni",
+  "short": "La discoteca di Caprarola, sulla strada del lago: dove la Tuscia balla.",
+  "maps": "I Cigni Caprarola"
+ },
+ {
+  "id": "bunker",
+  "cat": "storia",
+  "name": "Il bunker del Soratte",
+  "short": "Gallerie scavate nella montagna dal 1937: rifugio, comando, poi bunker antiatomico.",
+  "maps": "Bunker Soratte Sant'Oreste"
+ },
+ {
+  "id": "ronciglione",
+  "cat": "luoghi",
+  "name": "Ronciglione",
+  "short": "Il borgo del Palio delle Corse a Vuoto e di uno dei carnevali più antichi del Lazio.",
+  "maps": "Ronciglione"
+ },
+ {
+  "id": "corse-a-vuoto",
+  "cat": "tradizioni",
+  "name": "Le Corse a Vuoto",
+  "short": "Cavalli senza fantino su 800 metri di sabbia: a Ronciglione dal 1548.",
+  "maps": "Corse a Vuoto Ronciglione"
+ },
+ {
+  "id": "viterbo",
+  "cat": "luoghi",
+  "name": "Viterbo",
+  "short": "La Città dei Papi: il capoluogo della Tuscia, chiuso nelle sue mura medievali.",
+  "maps": "Viterbo centro storico"
+ },
+ {
+  "id": "palazzo-papi",
+  "cat": "storia",
+  "name": "Il Palazzo dei Papi",
+  "short": "La loggia gotica e la sala del conclave più lungo della storia.",
+  "maps": "Palazzo dei Papi Viterbo"
+ },
+ {
+  "id": "san-pellegrino",
+  "cat": "storia",
+  "name": "Il quartiere di San Pellegrino",
+  "short": "Un borgo medievale intatto, tutto in peperino, con le scale esterne delle case.",
+  "maps": "Quartiere San Pellegrino Viterbo"
+ },
+ {
+  "id": "santa-rosa",
+  "cat": "tradizioni",
+  "name": "La Macchina di Santa Rosa",
+  "short": "La sera del 3 settembre cento facchini portano a spalla una torre di luce alta trenta metri.",
+  "maps": "Santuario di Santa Rosa Viterbo"
+ },
+ {
+  "id": "consorzio-pedica",
+  "cat": "attivita",
+  "name": "Consorzio Pedica Angela",
+  "short": "Il consorzio agrario di Fabrica di Roma: prodotti per l'agricoltura e consigli per il raccolto.",
+  "maps": "Consorzio Pedica Angela, Via Vignanello 1, Fabrica di Roma"
+ }
+]
