@@ -1,5 +1,5 @@
 # A NOCCHIA DE O GIORNO — card del mattino con l'indizio del posto dove sta la nocchia d'oro nel gioco.
-# Stessa regola di engine/tg-nocchia-giorno.js: n = giorni dal 1970-01-01 (data locale), luogo = luoghi[(n*11) % len].
+# Stessa regola di engine/tg-nocchia-giorno.js: n = giorni dal 1970-01-01 (data locale), luogo = luoghi[(n*11) % len] (21 luoghi raggiungibili, le vette e Viterbo sono esclusi).
 # Uso: python3 nocchia-giorno.py 2026-11-10 out.jpg   → stampa anche la didascalia
 import sys, json, os, datetime as dt
 from PIL import Image, ImageDraw, ImageFont

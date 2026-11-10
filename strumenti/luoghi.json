@@ -21,34 +21,6 @@
   "maps": null
  },
  {
-  "id": "venere",
-  "cat": "luoghi",
-  "name": "Monte Venere",
-  "short": "Il cono vulcanico nato dentro la caldera: 838 metri.",
-  "maps": "Monte Venere Caprarola"
- },
- {
-  "id": "fogliano",
-  "cat": "luoghi",
-  "name": "Monte Fogliano",
-  "short": "La cima più alta dell'anello del lago: 965 metri.",
-  "maps": "Monte Fogliano"
- },
- {
-  "id": "faggeta-venere",
-  "cat": "natura",
-  "name": "Faggeta depressa",
-  "short": "Faggi a meno di 900 metri: rari così in basso.",
-  "maps": "Faggeta Monte Venere"
- },
- {
-  "id": "deltaplano",
-  "cat": "attivita",
-  "name": "Volo libero sulla caldera",
-  "short": "Dal bordo della caldera si decolla in deltaplano e parapendio.",
-  "maps": "decollo deltaplano Lago di Vico"
- },
- {
   "id": "vela",
   "cat": "attivita",
   "name": "Vela sul lago",
@@ -154,48 +126,6 @@
   "maps": "Abbazia di Santa Maria di Falleri"
  },
  {
-  "id": "soratte",
-  "cat": "luoghi",
-  "name": "Monte Soratte",
-  "short": "La montagna isolata sulla valle del Tevere: 691 metri. Da Falerii si vede all'orizzonte.",
-  "maps": "Monte Soratte"
- },
- {
-  "id": "cimino",
-  "cat": "luoghi",
-  "name": "Monte Cimino",
-  "short": "La montagna più alta della zona: 1053 metri.",
-  "maps": "Monte Cimino"
- },
- {
-  "id": "faggeta-unesco",
-  "cat": "natura",
-  "name": "Faggeta del Monte Cimino",
-  "short": "Patrimonio UNESCO dal 2017: faggi altissimi e antichi.",
-  "maps": "Faggeta Monte Cimino"
- },
- {
-  "id": "sasso",
-  "cat": "natura",
-  "name": "Sasso Menicante",
-  "short": "Un masso enorme che oscilla se lo spingi nel punto giusto.",
-  "maps": "Sasso Menicante"
- },
- {
-  "id": "cigni",
-  "cat": "tradizioni",
-  "name": "Le serate ai Cigni",
-  "short": "La discoteca di Caprarola, sulla strada del lago: dove la Tuscia balla.",
-  "maps": "I Cigni Caprarola"
- },
- {
-  "id": "bunker",
-  "cat": "storia",
-  "name": "Il bunker del Soratte",
-  "short": "Gallerie scavate nella montagna dal 1937: rifugio, comando, poi bunker antiatomico.",
-  "maps": "Bunker Soratte Sant'Oreste"
- },
- {
   "id": "ronciglione",
   "cat": "luoghi",
   "name": "Ronciglione",
@@ -208,34 +138,6 @@
   "name": "Le Corse a Vuoto",
   "short": "Cavalli senza fantino su 800 metri di sabbia: a Ronciglione dal 1548.",
   "maps": "Corse a Vuoto Ronciglione"
- },
- {
-  "id": "viterbo",
-  "cat": "luoghi",
-  "name": "Viterbo",
-  "short": "La Città dei Papi: il capoluogo della Tuscia, chiuso nelle sue mura medievali.",
-  "maps": "Viterbo centro storico"
- },
- {
-  "id": "palazzo-papi",
-  "cat": "storia",
-  "name": "Il Palazzo dei Papi",
-  "short": "La loggia gotica e la sala del conclave più lungo della storia.",
-  "maps": "Palazzo dei Papi Viterbo"
- },
- {
-  "id": "san-pellegrino",
-  "cat": "storia",
-  "name": "Il quartiere di San Pellegrino",
-  "short": "Un borgo medievale intatto, tutto in peperino, con le scale esterne delle case.",
-  "maps": "Quartiere San Pellegrino Viterbo"
- },
- {
-  "id": "santa-rosa",
-  "cat": "tradizioni",
-  "name": "La Macchina di Santa Rosa",
-  "short": "La sera del 3 settembre cento facchini portano a spalla una torre di luce alta trenta metri.",
-  "maps": "Santuario di Santa Rosa Viterbo"
  },
  {
   "id": "consorzio-pedica",
