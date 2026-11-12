@@ -8,7 +8,7 @@ Script che il compito automatico delle 21 usa ogni sera. Tutto quello che serve 
   Stessa regola del gioco (`engine/tg-nocchia-giorno.js`): luogo = `luoghi.json[(giorni dal 1970-01-01) * 11 % 35]`.
 - `derby.py classifica.json DATA out.jpg` — il derby di DATA: un solo comune (giorni dispari chi insegue, giorni pari chi dorme), i suoi numeri veri, una stoccata; stampa la didascalia (utm `derby`).
 - `settimana.py settimana.json out.jpg` — post della domenica: raccolto di ogni paese in settimana, giocatori, «o mejo de o paese» (nomi da `tg_fantasmi`).
-- `zone.py zone.json out.jpg` — mappa de «A guerra de e nocchie» (le zone colorate per comune, ultimi 7 giorni) + la riga per la didascalia. `zone.json` = risultato di `select public.tg_zone();`.
+- `zone.py zone.json out.jpg` — mappa de «A guerra de e nocchie»: il mondo spartito in celle esagonali da 300 m (≈23 ettari), colorate per comune (ultimi 7 giorni), legenda in ettari + la riga per la didascalia. `zone.json` = risultato di `select public.tg_zone();` (chiavi «h<q>_<r>» = celle; le vecchie chiavi a cerchi vengono ignorate).
 - `luoghi.json` — i 35 luoghi del mondo (id, cat, name, short), nello stesso ordine di `TG.debug.places` senza `lago`.
 - `font/` — Poppins Bold/Medium, Lora Italic.
 
