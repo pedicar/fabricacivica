@@ -33,6 +33,7 @@ def stoccata(paese, n): L = STOCCATE.get(paese) or [f"{n} sta in classifica. Pe'
 def scegli(d, giorno):
     """Alterna: giorni dispari → il comune che insegue (fa punti ma non è primo); giorni pari → un rivale che dorme."""
     righe = d.get('righe', []); sil = d.get('silenti', []) or []
+    for i, r in enumerate(righe): r.setdefault('pos', i + 1)   # tg_classifica_sera() non manda la posizione: è l'ordine delle righe
     primo = righe[0] if righe else None
     insegue = [r for r in righe[1:]]
     insegue.sort(key=lambda r: -(r.get('oggi') or 0))
