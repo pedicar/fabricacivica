@@ -8,12 +8,14 @@ Script che il compito automatico delle 21 usa ogni sera. Tutto quello che serve 
   Stessa regola del gioco (`engine/tg-nocchia-giorno.js`): luogo = `luoghi.json[(giorni dal 1970-01-01) * 11 % 35]`.
 - `derby.py classifica.json DATA out.jpg` — il derby di DATA: un solo comune (giorni dispari chi insegue, giorni pari chi dorme), i suoi numeri veri, una stoccata; stampa la didascalia (utm `derby`).
 - `settimana.py settimana.json out.jpg` — post della domenica: raccolto di ogni paese in settimana, giocatori, «o mejo de o paese» (nomi da `tg_fantasmi`).
+- `zone.py zone.json out.jpg` — mappa de «A guerra de e nocchie» (le zone colorate per comune, ultimi 7 giorni) + la riga per la didascalia. `zone.json` = risultato di `select public.tg_zone();`.
 - `luoghi.json` — i 35 luoghi del mondo (id, cat, name, short), nello stesso ordine di `TG.debug.places` senza `lago`.
 - `font/` — Poppins Bold/Medium, Lora Italic.
 
 ## Procedura della sera (eseguita dal compito pianificato)
 1. `SELECT public.tg_classifica_sera();` sul progetto Supabase `wahrowxonkfqsktjmbdg` → salvare il JSON in `classifica.json`.
 2. `python3 sera.py classifica.json trono-nocchie/classifica/YYYY-MM-DD.jpg` → didascalia a schermo.
+2b. `select public.tg_zone();` → `zone.json`; `python3 zone.py zone.json trono-nocchie/zone/YYYY-MM-DD.jpg` → stampa la riga «⚔ A guerra de e nocchie: …» da inserire nella didascalia della classifica, prima del «👉». L'immagine delle zone è la SECONDA immagine del post della classifica.
 3. `python3 nocchia-giorno.py <domani> trono-nocchie/nocchia/<domani>.jpg` → didascalia a schermo.
 4. `git add` + commit + push su `main` (le immagini diventano `https://raw.githubusercontent.com/pedicar/fabricacivica/main/trono-nocchie/...`).
 5. Metricool, brand TRONO DI NOCCHIE (blogId 7919446, Facebook, fuso Europe/Paris):
