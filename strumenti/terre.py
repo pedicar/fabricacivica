@@ -155,31 +155,31 @@ def card_sfida(Z, giorno, out, finale=False):
         w = d.textlength(t, font=f); d.text((x - w / 2 + 3, y + 4), t, font=f, fill=(0, 0, 0)); d.text((x - w / 2, y), t, font=f, fill=fill)
     if finale and na != nb:
         v, p = (a, b) if na > nb else (b, a)
-        cen('A SFIDA DE A SETTIMANA', 120, F('Poppins-Bold.ttf', 46), (247, 240, 224))
+        cen('O DERBY DE A SETTIMANA', 120, F('Poppins-Bold.ttf', 46), (247, 240, 224))
         fs = 140
         while d.textlength(NOMI_SF[v].upper(), font=F('Poppins-Bold.ttf', fs)) > W - 100: fs -= 8
         cen(NOMI_SF[v].upper(), 300, F('Poppins-Bold.ttf', fs), (255, 255, 255))
         cen('HA BATTUTO', 480, F('Poppins-Bold.ttf', 64), (247, 240, 224))
         cen(NOMI_SF[p].upper(), 580, F('Poppins-Bold.ttf', 90), (230, 222, 205))
     else:
-        cen('⚔ A SFIDA DE A SETTIMANA'.replace('⚔ ', ''), 120, F('Poppins-Bold.ttf', 46), (247, 240, 224))
+        cen('O DERBY DE A SETTIMANA', 120, F('Poppins-Bold.ttf', 46), (247, 240, 224))
         cen(NOMI_SF[a].upper(), 290, F('Poppins-Bold.ttf', 100), (255, 255, 255))
         cen('contro', 440, F('Poppins-Medium.ttf', 44), (230, 222, 205))
         cen(NOMI_SF[b].upper(), 520, F('Poppins-Bold.ttf', 100), (255, 255, 255))
     cen(f"{na}   –   {nb}", 760, F('Poppins-Bold.ttf', 190), (255, 255, 255))
     cen('campi presi', 990, F('Poppins-Medium.ttf', 38), (230, 222, 205))
     if liberi and not finale: cen(f"{liberi} campi ancora liberi", 1050, F('Poppins-Medium.ttf', 34), (200, 205, 195))
-    cen('Lunedì se riparte: grandtuscia.netlify.app' if finale else 'Scegli a squadra tua: grandtuscia.netlify.app', H - 110, F('Poppins-Medium.ttf', 32), (220, 225, 215))
+    cen('Lunedì se riparte: grandtuscia.netlify.app' if finale else 'Gioca pe\' o paese tuo: grandtuscia.netlify.app', H - 110, F('Poppins-Medium.ttf', 32), (220, 225, 215))
     im.save(out, quality=90, optimize=True)
     return P, tot, liberi
 def riga_sfida(P, tot, liberi, giorno, finale=False):
     a, b = P; na, nb = tot[a], tot[b]; A, B = NOMI_SF[a], NOMI_SF[b]
     dom = datetime.date.fromisoformat(giorno).weekday() == 6
     if finale:
-        if na == nb: return f"⚔ A sfida finisce pari: {A} {na} – {B} {nb}. Lunedì se riparte."
+        if na == nb: return f"⚔ O derby finisce pari: {A} {na} – {B} {nb}. Lunedì se riparte."
         v, p = (A, B) if na > nb else (B, A)
         return f"🏆 {v} ha battuto {p}: {max(na, nb)} campi a {min(na, nb)}. Lunedì a rivincita."
-    s = f"⚔ A SFIDA: {A} {na} – {B} {nb}"
+    s = f"⚔ O DERBY: {A} {na} – {B} {nb}"
     if liberi: s += f" · {liberi} campi ancora liberi"
     s += '. ' + ("Stanotte a mezzanotte se chiude: chi se pija l'ultimi campi?" if dom else "Domenica sera vince chi tiene più campi.")
     if na == nb: s += ' Tutto aperto.'
