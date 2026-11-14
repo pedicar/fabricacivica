@@ -19,7 +19,10 @@ def breve(n):
     for a in ('Il ', 'I ', 'La ', 'Le ', 'Lo '):
         if n.startswith(a): return n[len(a):]
     return n
-def padrone(l): return l[0] if l and l[0].get('punti', 0) > 0 else None
+SOGLIA = 10   # come o gioco (engine/tg-terre.js): pe' tenè un terreno bisogna stà davanti de almeno 10, sennò è conteso
+def padrone(l):
+    if not l or l[0].get('punti', 0) <= 0: return None
+    return l[0] if len(l) < 2 or l[0]['punti'] - l[1].get('punti', 0) >= SOGLIA else None
 def disegna(Z, out):
     W = 1080; minX, maxX, minZ, maxZ = BOUNDS
     MH = int(W * (maxZ - minZ) / (maxX - minX)); TOP = 150; H = TOP + MH + 190
@@ -32,7 +35,7 @@ def disegna(Z, out):
         if len(pts) > 1: d.line(pts, fill=(205, 190, 160, 150), width=4 if s.get('k') == 'asfalto' else 2)
     d.rectangle([0, 0, W, TOP - 10], fill=(120, 78, 40))
     d.text((60, 36), 'A GUERRA DE I TERRENI', font=F('Poppins-Bold.ttf', 44), fill=(247, 240, 224))
-    d.text((60, 96), "Ogni terreno è de o paese che c'ha raccolto più nocchie questa settimana", font=F('Poppins-Medium.ttf', 23), fill=(230, 215, 190))
+    d.text((60, 96), "Ogni terreno è de o paese che c'ha scaricato più nocchie questa settimana", font=F('Poppins-Medium.ttf', 23), fill=(230, 215, 190))
     tot, nomi = {}, {}
     for l in Z.values():
         for r in l: nomi[r['paese']] = r['nome']
