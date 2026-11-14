@@ -122,11 +122,79 @@ def trono(Z, out):
     im.save(out, quality=90, optimize=True)
     return vin, nomi.get(vin, vin), n
 
+# ---- a sfida de a settimana: due paesi, 12 campi de confine (stessa scelta de engine/tg-sfida.js + tg-terre.js calcolaAccesi) ----
+import datetime
+PROGRAMMA = {'2026-11-09': ('fabrica', 'carbognano'), '2026-11-16': ('fabrica', 'carbognano')}
+ROTA = [('fabrica', 'carbognano'), ('caprarola', 'ronciglione')]
+NOMI_SF = {'fabrica': 'Fabrica', 'carbognano': 'Carbognano', 'caprarola': 'Caprarola', 'ronciglione': 'Ronciglione', 'viterbo': 'Viterbo'}
+def sfida(giorno):
+    d = datetime.date.fromisoformat(giorno); lun = d - datetime.timedelta(days=d.weekday())
+    if lun.isoformat() in PROGRAMMA: return PROGRAMMA[lun.isoformat()], lun
+    n = round((lun - datetime.date(2026, 11, 16)).days / 7); return ROTA[n % len(ROTA)], lun
+def campi_sfida(P):
+    a, b = CENTRI[P[0]], CENTRI[P[1]]; mx, mz = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2; out = []
+    for q in P:
+        l = [t for t in G['terre'] if t['id'] != 't:podere' and zona(t) == q]
+        l.sort(key=lambda t: ((t['x'] - mx) ** 2 + (t['z'] - mz) ** 2) ** .5); out += l[:6]
+    return out
+def punteggio_sfida(Z, giorno):
+    P, lun = sfida(giorno); tot = {P[0]: 0, P[1]: 0}; campi = campi_sfida(P)
+    for t in campi:
+        l = [r for r in (Z.get(t['id']) or []) if r['paese'] in P and r.get('punti', 0) > 0]
+        if l: tot[max(l, key=lambda r: r['punti'])['paese']] += 1
+    return P, tot, len(campi) - sum(tot.values()), lun
+def card_sfida(Z, giorno, out, finale=False):
+    P, tot, liberi, lun = punteggio_sfida(Z, giorno); a, b = P; na, nb = tot[a], tot[b]
+    W, H = 1080, 1350; im = Image.new('RGB', (W, H), (20, 26, 23)); d = ImageDraw.Draw(im)
+    ca, cb = colore(a), colore(b)
+    for y in range(H):
+        f = max(0, 1 - y / 1000)
+        d.line([(0, y), (W // 2, y)], fill=tuple(int(c * f + (20, 26, 23)[i] * (1 - f)) for i, c in enumerate(ca)))
+        d.line([(W // 2, y), (W, y)], fill=tuple(int(c * f + (20, 26, 23)[i] * (1 - f)) for i, c in enumerate(cb)))
+    def cen(t, y, f, fill, x=W / 2):
+        w = d.textlength(t, font=f); d.text((x - w / 2 + 3, y + 4), t, font=f, fill=(0, 0, 0)); d.text((x - w / 2, y), t, font=f, fill=fill)
+    if finale and na != nb:
+        v, p = (a, b) if na > nb else (b, a)
+        cen('A SFIDA DE A SETTIMANA', 120, F('Poppins-Bold.ttf', 46), (247, 240, 224))
+        fs = 140
+        while d.textlength(NOMI_SF[v].upper(), font=F('Poppins-Bold.ttf', fs)) > W - 100: fs -= 8
+        cen(NOMI_SF[v].upper(), 300, F('Poppins-Bold.ttf', fs), (255, 255, 255))
+        cen('HA BATTUTO', 480, F('Poppins-Bold.ttf', 64), (247, 240, 224))
+        cen(NOMI_SF[p].upper(), 580, F('Poppins-Bold.ttf', 90), (230, 222, 205))
+    else:
+        cen('⚔ A SFIDA DE A SETTIMANA'.replace('⚔ ', ''), 120, F('Poppins-Bold.ttf', 46), (247, 240, 224))
+        cen(NOMI_SF[a].upper(), 290, F('Poppins-Bold.ttf', 100), (255, 255, 255))
+        cen('contro', 440, F('Poppins-Medium.ttf', 44), (230, 222, 205))
+        cen(NOMI_SF[b].upper(), 520, F('Poppins-Bold.ttf', 100), (255, 255, 255))
+    cen(f"{na}   –   {nb}", 760, F('Poppins-Bold.ttf', 190), (255, 255, 255))
+    cen('campi presi', 990, F('Poppins-Medium.ttf', 38), (230, 222, 205))
+    if liberi and not finale: cen(f"{liberi} campi ancora liberi", 1050, F('Poppins-Medium.ttf', 34), (200, 205, 195))
+    cen('Lunedì se riparte: grandtuscia.netlify.app' if finale else 'Scegli a squadra tua: grandtuscia.netlify.app', H - 110, F('Poppins-Medium.ttf', 32), (220, 225, 215))
+    im.save(out, quality=90, optimize=True)
+    return P, tot, liberi
+def riga_sfida(P, tot, liberi, giorno, finale=False):
+    a, b = P; na, nb = tot[a], tot[b]; A, B = NOMI_SF[a], NOMI_SF[b]
+    dom = datetime.date.fromisoformat(giorno).weekday() == 6
+    if finale:
+        if na == nb: return f"⚔ A sfida finisce pari: {A} {na} – {B} {nb}. Lunedì se riparte."
+        v, p = (A, B) if na > nb else (B, A)
+        return f"🏆 {v} ha battuto {p}: {max(na, nb)} campi a {min(na, nb)}. Lunedì a rivincita."
+    s = f"⚔ A SFIDA: {A} {na} – {B} {nb}"
+    if liberi: s += f" · {liberi} campi ancora liberi"
+    s += '. ' + ("Stanotte a mezzanotte se chiude: chi se pija l'ultimi campi?" if dom else "Domenica sera vince chi tiene più campi.")
+    if na == nb: s += ' Tutto aperto.'
+    else: s += f" {A if na < nb else B} deve rimonta'."
+    return s
+
 if __name__ == '__main__':
     # python3 terre.py terre.json out.jpg            → riga de a guerra pe' a classifica
     # python3 terre.py --battaglia AAAA-MM-GG         → riga de a battaglia de quel giorno (pe' o post de a sera, co' a data de domani)
     # python3 terre.py --trono terre.json out.jpg     → card de a domenica (o Trono) + riga
-    if sys.argv[1] == '--battaglia':
+    # python3 terre.py --sfida terre.json out.jpg [AAAA-MM-GG] [--finale] → card + riga de a sfida de a settimana
+    if sys.argv[1] == '--sfida':
+        g = next((x for x in sys.argv[4:] if x[:2] == '20'), datetime.date.today().isoformat()); fin = '--finale' in sys.argv
+        Z = json.load(open(sys.argv[2])); P, tot, lib = card_sfida(Z, g, sys.argv[3], fin); print(riga_sfida(P, tot, lib, g, fin))
+    elif sys.argv[1] == '--battaglia':
         t, z = battaglia(sys.argv[2]); print(f"⚔ Domani se combatte pe' o {breve(t['nome'])} (vicino a {z}): ogni nocchia raccolta lì vale doppio. Chi se o pija domani sera?")
     elif sys.argv[1] == '--trono':
         Z = json.load(open(sys.argv[2])); r = trono(Z, sys.argv[3])
