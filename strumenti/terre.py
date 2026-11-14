@@ -186,12 +186,58 @@ def riga_sfida(P, tot, liberi, giorno, finale=False):
     else: s += f" {A if na < nb else B} deve rimonta'."
     return s
 
+# ---- a rivalità de a sera: i due paesi più vicini in classifica de i terreni (o derby vive solo ne i post) ----
+def rivali(Z):
+    tot, nomi = {}, {}
+    for l in Z.values():
+        for r in l: nomi[r['paese']] = r['nome']
+    for t in G['terre']:
+        p = padrone(Z.get(t['id']) or [])
+        if p: tot[p['paese']] = tot.get(p['paese'], 0) + 1
+    cl = sorted((q for q in tot.items() if q[0] != 'fuori'), key=lambda q: -q[1])
+    if len(cl) < 2: return None
+    ok = [i for i in range(len(cl) - 1) if cl[i + 1][1] >= 2] or [0]   # niente rivalità tra paesi co' un terreno solo, se se pò
+    i = min(ok, key=lambda i: ((cl[i][1] - cl[i + 1][1]) / (cl[i][1] + cl[i + 1][1]), i))
+    return cl[i], cl[i + 1], i + 1, nomi
+def corto(n): return n.split(' (')[0].replace(' di Roma', '').replace(' Castellana', ' C.')
+def card_rivali(Z, out):
+    r = rivali(Z)
+    if not r: return None
+    (a, na), (b, nb), pos, nomi = r; A, B = corto(nomi.get(a, a)), corto(nomi.get(b, b))
+    W, H = 1080, 1350; im = Image.new('RGB', (W, H), (20, 26, 23)); d = ImageDraw.Draw(im)
+    ca, cb = colore(a), colore(b)
+    for y in range(H):
+        f = max(0, 1 - y / 1000)
+        d.line([(0, y), (W // 2, y)], fill=tuple(int(c * f + (20, 26, 23)[i] * (1 - f)) for i, c in enumerate(ca)))
+        d.line([(W // 2, y), (W, y)], fill=tuple(int(c * f + (20, 26, 23)[i] * (1 - f)) for i, c in enumerate(cb)))
+    def cen(t, y, fs, fill, bold=True):
+        f = F('Poppins-Bold.ttf' if bold else 'Poppins-Medium.ttf', fs)
+        while d.textlength(t, font=f) > W - 100 and fs > 40: fs -= 6; f = F('Poppins-Bold.ttf' if bold else 'Poppins-Medium.ttf', fs)
+        w = d.textlength(t, font=f); d.text(((W - w) / 2 + 3, y + 4), t, font=f, fill=(0, 0, 0)); d.text(((W - w) / 2, y), t, font=f, fill=fill)
+    cen('A RIVALITÀ DE STASERA', 120, 46, (247, 240, 224))
+    cen(A.upper(), 290, 100, (255, 255, 255)); cen('contro', 440, 44, (230, 222, 205), False); cen(B.upper(), 520, 100, (255, 255, 255))
+    cen(f"{na}   –   {nb}", 760, 190, (255, 255, 255))
+    cen('terreni tenuti', 990, 38, (230, 222, 205), False)
+    g = na - nb
+    cen(('Pari: chi passa davanti?' if g == 0 else f"{g} terren{'o' if g == 1 else 'i'} de differenza") + (f" · {pos}° e {pos + 1}° posto"), 1050, 34, (200, 205, 195), False)
+    cen('Gioca pe\' o paese tuo: grandtuscia.netlify.app', H - 110, 32, (220, 225, 215), False)
+    im.save(out, quality=90, optimize=True)
+    return A, B, na, nb, pos
+def riga_rivali(r):
+    if not r: return ''
+    A, B, na, nb, pos = r; g = na - nb
+    if g == 0: return f"⚔ A RIVALITÀ DE STASERA: {A} e {B} so' pari, {na} terreni a testa. Domani chi passa davanti?"
+    return f"⚔ A RIVALITÀ DE STASERA: {A} {na} – {B} {nb}. {'Un terreno' if g == 1 else str(g) + ' terreni'} de differenza: {B}, domani o sorpasso?"
+
 if __name__ == '__main__':
     # python3 terre.py terre.json out.jpg            → riga de a guerra pe' a classifica
     # python3 terre.py --battaglia AAAA-MM-GG         → riga de a battaglia de quel giorno (pe' o post de a sera, co' a data de domani)
     # python3 terre.py --trono terre.json out.jpg     → card de a domenica (o Trono) + riga
     # python3 terre.py --sfida terre.json out.jpg [AAAA-MM-GG] [--finale] → card + riga de a sfida de a settimana
-    if sys.argv[1] == '--sfida':
+    # python3 terre.py --rivali terre.json out.jpg → card + riga de a rivalità de a sera (i due paesi più vicini in classifica)
+    if sys.argv[1] == '--rivali':
+        Z = json.load(open(sys.argv[2])); print(riga_rivali(card_rivali(Z, sys.argv[3])) or 'Nessuna rivalità: meno de due paesi co\' terreni.')
+    elif sys.argv[1] == '--sfida':
         g = next((x for x in sys.argv[4:] if x[:2] == '20'), datetime.date.today().isoformat()); fin = '--finale' in sys.argv
         Z = json.load(open(sys.argv[2])); P, tot, lib = card_sfida(Z, g, sys.argv[3], fin); print(riga_sfida(P, tot, lib, g, fin))
     elif sys.argv[1] == '--battaglia':
