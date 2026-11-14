@@ -67,5 +67,69 @@ def riga(Z, tot, nomi, liberi):
     s = "⚔ A guerra de i terreni: " + ', '.join(parti) + f". Liberi: {liberi}"
     if c: s += f". O più conteso è o {c[0]}: {c[1]} sta davanti a {c[2]} de {c[3]} nocchi{'a' if c[3] == 1 else 'e'}"
     return s + '.'
+
+# ---- i terreni accesi e a battaglia de un giorno: stessa scelta de o gioco (engine/tg-terre.js calcolaAccesi) ----
+CENTRI = {'fabrica': (4080, -640), 'carbognano': (3230, -470), 'caprarola': (2280, -170), 'falerii': (5330, 960), 'ronciglione': (1560, 1620), 'viterbo': (-750, -3350), 'pantanacce': (-900, -900)}
+NOMI_ZONA = {'fabrica': 'Fabrica', 'carbognano': 'Carbognano', 'caprarola': 'Caprarola', 'falerii': 'Falerii', 'ronciglione': 'Ronciglione', 'viterbo': 'Viterbo', 'pantanacce': 'e Pantanacce'}
+def fnv(s):
+    h = 2166136261
+    for ch in s:
+        h ^= ord(ch); h = (h * 16777619) & 0xffffffff
+    return h
+def zona(t):
+    return min(CENTRI, key=lambda k: (t['x'] - CENTRI[k][0]) ** 2 + (t['z'] - CENTRI[k][1]) ** 2)
+def accesi(giorno):
+    gr = {}
+    for t in G['terre']:
+        if t['id'] == 't:podere': continue
+        gr.setdefault(zona(t), []).append(t)
+    s = {'t:podere'}
+    for k, l in gr.items():
+        for t in sorted(l, key=lambda t: fnv(giorno + t['id']))[:3]: s.add(t['id'])
+    return s
+def battaglia(giorno):
+    a = [i for i in accesi(giorno) if i != 't:podere']
+    i = min(a, key=lambda i: fnv('battaglia' + giorno + i))
+    t = next(t for t in G['terre'] if t['id'] == i)
+    return t, NOMI_ZONA[zona(t)]
+def trono(Z, out):
+    """Card de a domenica: o paese che tiene più terreni se prende o Trono."""
+    tot, nomi = {}, {}
+    for l in Z.values():
+        for r in l: nomi[r['paese']] = r['nome']
+    for t in G['terre']:
+        p = padrone(Z.get(t['id']) or [])
+        if p: tot[p['paese']] = tot.get(p['paese'], 0) + 1
+    cl = sorted(tot.items(), key=lambda q: -q[1])
+    W, H = 1080, 1350; im = Image.new('RGB', (W, H), (20, 26, 23)); d = ImageDraw.Draw(im)
+    if not cl:
+        return None
+    vin, n = cl[0]; col = colore(vin)
+    for y in range(H):
+        f = max(0, 1 - y / 900); d.line([(0, y), (W, y)], fill=tuple(int(c * f + (20, 26, 23)[i] * (1 - f)) for i, c in enumerate(col)))
+    def cen(t, y, f, fill):
+        w = d.textlength(t, font=f); d.text(((W - w) / 2 + 3, y + 4), t, font=f, fill=(0, 0, 0)); d.text(((W - w) / 2, y), t, font=f, fill=fill)
+    cen('👑' if False else 'O TRONO DE E NOCCHIE', 150, F('Poppins-Bold.ttf', 58), (247, 240, 224))
+    cen('VA A', 300, F('Poppins-Bold.ttf', 60), (247, 240, 224))
+    nome = nomi.get(vin, vin).upper(); fs = 130
+    while d.textlength(nome, font=F('Poppins-Bold.ttf', fs)) > W - 120 and fs > 60: fs -= 6
+    cen(nome, 400, F('Poppins-Bold.ttf', fs), (255, 255, 255))
+    cen(f"{n} terren{'o' if n == 1 else 'i'} tenuti a a fine de a settimana", 600, F('Poppins-Medium.ttf', 40), (247, 240, 224))
+    y = 760
+    for i, (p, k) in enumerate(cl[1:6], 2):
+        t = f"{i}. {nomi.get(p, p)} · {k}"; d.ellipse([300, y + 12, 330, y + 42], fill=colore(p)); d.text((350, y), t, font=F('Poppins-Bold.ttf', 40), fill=(230, 222, 205)); y += 66
+    cen('Lunedì se riparte da zero: grandtuscia.netlify.app', H - 110, F('Poppins-Medium.ttf', 32), (200, 205, 195))
+    im.save(out, quality=90, optimize=True)
+    return vin, nomi.get(vin, vin), n
+
 if __name__ == '__main__':
-    Z = json.load(open(sys.argv[1])); tot, nomi, liberi = disegna(Z, sys.argv[2]); print(riga(Z, tot, nomi, liberi))
+    # python3 terre.py terre.json out.jpg            → riga de a guerra pe' a classifica
+    # python3 terre.py --battaglia AAAA-MM-GG         → riga de a battaglia de quel giorno (pe' o post de a sera, co' a data de domani)
+    # python3 terre.py --trono terre.json out.jpg     → card de a domenica (o Trono) + riga
+    if sys.argv[1] == '--battaglia':
+        t, z = battaglia(sys.argv[2]); print(f"⚔ Domani se combatte pe' o {breve(t['nome'])} (vicino a {z}): ogni nocchia raccolta lì vale doppio. Chi se o pija domani sera?")
+    elif sys.argv[1] == '--trono':
+        Z = json.load(open(sys.argv[2])); r = trono(Z, sys.argv[3])
+        print(f"👑 O TRONO DE E NOCCHIE va a {r[1]}: {r[2]} terren{'o' if r[2] == 1 else 'i'} tenuti a a fine de a settimana. Lunedì se riparte da zero." if r else 'Nessun terreno tenuto questa settimana.')
+    else:
+        Z = json.load(open(sys.argv[1])); tot, nomi, liberi = disegna(Z, sys.argv[2]); print(riga(Z, tot, nomi, liberi))
