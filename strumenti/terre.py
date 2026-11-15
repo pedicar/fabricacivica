@@ -35,7 +35,7 @@ def disegna(Z, out):
         if len(pts) > 1: d.line(pts, fill=(205, 190, 160, 150), width=4 if s.get('k') == 'asfalto' else 2)
     d.rectangle([0, 0, W, TOP - 10], fill=(120, 78, 40))
     d.text((60, 36), 'A GUERRA DE I TERRENI', font=F('Poppins-Bold.ttf', 44), fill=(247, 240, 224))
-    d.text((60, 96), "Ogni terreno è de o paese che c'ha scaricato più nocchie questa settimana", font=F('Poppins-Medium.ttf', 23), fill=(230, 215, 190))
+    d.text((60, 96), "Ogni terreno è de o paese che l'ha comprato co' e nocchie questa settimana", font=F('Poppins-Medium.ttf', 23), fill=(230, 215, 190))
     tot, nomi = {}, {}
     for l in Z.values():
         for r in l: nomi[r['paese']] = r['nome']
