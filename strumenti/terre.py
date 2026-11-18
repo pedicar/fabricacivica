@@ -25,7 +25,19 @@ def padrone(l):
     return l[0] if len(l) < 2 or l[0]['punti'] - l[1].get('punti', 0) >= SOGLIA else None
 def disegna(Z, out):
     W = 1080; minX, maxX, minZ, maxZ = BOUNDS
-    MH = int(W * (maxZ - minZ) / (maxX - minX)); TOP = 150; H = TOP + MH + 190
+    MH = int(W * (maxZ - minZ) / (maxX - minX)); TOP = 150
+    # altezza della legenda calcolata prima, così le righe in più non finiscono sopra il piè di pagina
+    fl = F('Poppins-Bold.ttf', 28); pre = {}
+    for t in G['terre']:
+        p = padrone(Z.get(t['id']) or [])
+        if p: pre[p['paese']] = pre.get(p['paese'], 0) + 1
+    nomi_pre = {r['paese']: r['nome'] for l in Z.values() for r in l}
+    righe, x0 = 1, 60
+    for p, n in sorted(pre.items(), key=lambda q: -q[1]):
+        w = ImageDraw.Draw(Image.new('RGB', (1, 1))).textlength(f"{nomi_pre.get(p, p)} {n}", font=fl) + 40
+        if x0 + w > W - 60: x0 = 60; righe += 1
+        x0 += w + 12
+    H = TOP + MH + 190 + max(0, righe - 1) * 44
     sx = lambda v: (v - minX) / (maxX - minX) * W; sz = lambda v: TOP + (v - minZ) / (maxZ - minZ) * MH
     k = W / (maxX - minX)
     im = Image.new('RGB', (W, H), (24, 33, 28)); d = ImageDraw.Draw(im, 'RGBA')

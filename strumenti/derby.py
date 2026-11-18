@@ -60,10 +60,10 @@ def testi(tipo, r, primo):
     if tipo == 'insegue' and primo:
         diff = primo['punti'] - r['punti']; persone = max(1, -(-diff // PUNTI_A_TESTA))
         titolo = f"{nome.upper()} {r['punti']} · {primo['nome'].upper()} {primo['punti']}"
-        risposta = f"Ve mancano {diff} nocchie: {persone} person{'a' if persone == 1 else 'e'} che giocano domani."
+        risposta = f"Ve mancano {diff} nocchie: {persone} person{'a che gioca' if persone == 1 else 'e che giocano'} domani."
         cap = (f"{nome.upper()}, SIETE A {diff} NOCCHIE DA {primo['nome'].upper()}.\n{g}\n"
                f"Classifica de stasera: {primo['nome']} {primo['punti']} ({primo.get('pos') or '?'}º), {nome} {r['punti']} ({r.get('pos') or '?'}º" + (f", +{r['oggi']} oggi" if r.get('oggi') else '') + ").\n"
-               f"{gent(nome)}, bastano {persone} de voi che giocano domani: ogni partita so' fino a 30 nocchie pe' o paese.")
+               f"{gent(nome)}, {'basta uno de voi che gioca' if persone == 1 else f'bastano {persone} de voi che giocano'} domani: ogni partita so' fino a 30 nocchie pe' o paese.")
     else:
         titolo = f"{nome.upper()}: {r['punti']} NOCCHIE" if r.get('punti') else f"{nome.upper()}: ZERO"
         if primo: risposta = f"{primo['nome']} ne c'ha {primo['punti']}. E voi state a dormì."
